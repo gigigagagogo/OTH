@@ -26,7 +26,7 @@ int main(void){
 			break;
 		}
 
-		struct grammar_rule *temp = realloc(rules, (nrules+1) *sizeof(struct grammar_rule));
+		struct grammar_rule *temp = realloc(rules, (nrules+1) * sizeof(struct grammar_rule));
 		if(temp == NULL){
 			printf("Problem with the memory allocation");
 			free(rules);
@@ -41,6 +41,7 @@ int main(void){
 		rules[nrules].rgh_rule = strdup(input);
 		nrules++;
 	}
+
 	printf("Rules list:\n");
  
 	for(int i = 0; i < nrules; i++){
