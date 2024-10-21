@@ -1,56 +1,81 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
-struct grammar_rule{
+typedef struct grammar {
+	char *lhs;
+	char *rhs;
+} rules;
 
-	char *lft_rule;
-	char *rgh_rule;
+typedef struct nodeg {
+	node_g *prev;
+	rules rule;
+	node_g *next; 
+} node_g;
 
-};
-
-int main(void){
-
-	char input[256];
-	struct grammar_rule *rules = NULL;
-	int nrules = 0;
+int generate_rules(node_g **head, node_g **tail){
 
 	while(1){
-		printf("Left rule or end: ");
 
-		do{
-			scanf("%s", input);
-		}while(strlen(input) == 0);
-
-		if(strcmp(input,"end") == 0){
-			break;
-		}
-
-		struct grammar_rule *temp = realloc(rules, (nrules+1) * sizeof(struct grammar_rule));
-		if(temp == NULL){
-			printf("Problem with the memory allocation");
-			free(rules);
+		rules *newRule = malloc(sizeof(rules));
+		if(newRule == NULL){
+			printf("Error with memory allocation!\n");
 			return 1;
 		}
 
-		rules = temp;
-		rules[nrules].lft_rule=strdup(input);
+		char string [256];
+		printf("Insert left rule or end:\n");
+		do{
+			scanf("%s", string);
+		while(strlen(string) == 0);
 
-		printf("Right rule: ");
-		scanf("%s", input);
-		rules[nrules].rgh_rule = strdup(input);
-		nrules++;
+		if(strcmp(string,"end") == 0){
+			free(newRule);
+			return 1;
+		}
+		newRule -> lhs = strdup(string);
+
+		printf("Insert right rule:\n");
+		scanf("%s", string);
+		newRule -> rhs = strdup(string);
+
+		if(enqueue_grammar(head, tail, newRule) != 0){
+			printf("Error with grammar rule enqueue!\n");
+			return ;
+		}
+
+		free(newRule -> lhs);
+		free(newRule -> rhs);
+		free(newRule);
+
 	}
-
-	printf("Rules list:\n");
- 
-	for(int i = 0; i < nrules; i++){
-		printf("{%s} -> {%s}\n", rules[i].lft_rule, rules[i].rgh_rule);
-	}
-
-	free(rules);
-
-	return 0;
+	 return 0;
 
 }
 
+int enqueue_grammar(node_g **head, node_g **tail, rules grule){
+	node_g *newNode = malloc(sizeof(node_g));
+
+	if(newMode == NULL){
+		printf("Error with memory allocation!\n");
+		return 1;
+	}
+
+	newNode -> rule = grule;
+	newNode -> next = NULL;
+	newNode -> prev = *tail;
+
+	if (tail == NULL){
+		*tail = newNode;
+		*head = newNode;
+	}else{
+		(*tail) -> next = newNode;
+		*tail = newNode;
+	}
+
+	return 0;
+}
+
+char *dequeue(node_g pop_rule){
+	return (pop_rule -> rule.rhs);
+}
