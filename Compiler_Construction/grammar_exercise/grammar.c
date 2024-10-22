@@ -1,17 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "grammar.h"
 
-typedef struct grammar {
-	char *lhs;
-	char *rhs;
-} rules;
-
-typedef struct nodeg {
-	node_g *prev;
-	rules rule;
-	node_g *next; 
-} node_g;
 
 int generate_rules(node_g **head, node_g **tail){
 
@@ -23,11 +14,11 @@ int generate_rules(node_g **head, node_g **tail){
 			return 1;
 		}
 
-		char string [256];
+		char string[256];
 		printf("Insert left rule or end:\n");
 		do{
 			scanf("%s", string);
-		while(strlen(string) == 0);
+		}while(strlen(string) == 0);
 
 		if(strcmp(string,"end") == 0){
 			free(newRule);
@@ -39,9 +30,12 @@ int generate_rules(node_g **head, node_g **tail){
 		scanf("%s", string);
 		newRule -> rhs = strdup(string);
 
-		if(enqueue_grammar(head, tail, newRule) != 0){
+		if(enqueue_grammar(head, tail, *newRule) != 0){
 			printf("Error with grammar rule enqueue!\n");
-			return ;
+			free(newRule -> lhs);
+	                free(newRule -> rhs);
+	                free(newRule);
+			return 1;
 		}
 
 		free(newRule -> lhs);
@@ -56,7 +50,7 @@ int generate_rules(node_g **head, node_g **tail){
 int enqueue_grammar(node_g **head, node_g **tail, rules grule){
 	node_g *newNode = malloc(sizeof(node_g));
 
-	if(newMode == NULL){
+	if(newNode == NULL){
 		printf("Error with memory allocation!\n");
 		return 1;
 	}
@@ -76,6 +70,5 @@ int enqueue_grammar(node_g **head, node_g **tail, rules grule){
 	return 0;
 }
 
-char *dequeue(node_g pop_rule){
-	return (pop_rule -> rule.rhs);
-}
+
+

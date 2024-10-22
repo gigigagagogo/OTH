@@ -4,6 +4,33 @@
 
 #include "grammar.h"
 #include "queue.h"
+#include "util.h"
+
+void generate_words(node_g *head, char *startSymbol){
+	node_t *wordQueueHead = NULL, *wordQueueTail = NULL;
+	enqueue_word(&wordQueueHead, &wordQueueTail, startSymbol);
+
+	while(!emptyqueue(&wordQueueHead,&wordQueueTail)){
+		char *currentWord=dequeue_word(&wordQueueHead);
+
+		if(!isterminal(currentWord)){
+			node_g *ruleNode=head;
+
+			while(ruleNode != NULL){
+				char *newWord = rep(currentWord, ruleNode -> rule.lhs, ruleNode -> rule.rhs, 0);
+				if(newWord != NULL){
+					enqueue_word(&wordQueueHead, &wordQueueTail, newWord);
+					free(newWord);
+				}
+				ruleNode = ruleNode -> next;
+			}
+		}else{
+			printf("Word contains only terminate symbol: %s\n", currentWord);
+		}
+		free(currentWord);
+	}
+}
+
 
 int main(void){
 	node_g *head = NULL;
@@ -14,16 +41,10 @@ int main(void){
 		return 1;
 	}
 
-	node_g *current = head;
-    	while (current != NULL) {
-        	printf("{%s -> %s\n}", current->rule.lhs, current->rule.rhs);
-       		if(enqueue_word(current) != 0){
-			printf("Error with word enqueue!\n");
-			return ;
-		}
-		current = current->next;
-    	}
+	char *startSymbol = STARTSYMBOL;
 
-	return 0;
+	generate_words(head, startSymbol);
+
+	return 0; 
 
 }

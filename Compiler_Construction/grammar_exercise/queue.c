@@ -1,16 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-typedef struct node {
-	node_t *prev;
-	char *word;
-	node_t *next;
-} node_t;
+#include "queue.h"
 
 int enqueue_word(node_t **head, node_t **tail, char *string) {
-	node_t newNode = malloc (sizeof(node_t));
-	if(newMode == NULL){
+	node_t *newNode = malloc (sizeof(node_t));
+	if(newNode == NULL){
 		printf("Error with memory allocation!\n");
 		return 1;
 	}
@@ -20,8 +15,8 @@ int enqueue_word(node_t **head, node_t **tail, char *string) {
 	newNode -> prev = *tail;
 
 	if(tail == NULL){
-		*head = newNode;
 		*tail = newNode;
+		*head = newNode;
 	}else{
 		(*tail) -> next = newNode;
 		*tail = newNode;
@@ -30,3 +25,23 @@ int enqueue_word(node_t **head, node_t **tail, char *string) {
 	return 0;
 }
 
+char *dequeue_word(node_t **head){
+
+	if(*head == NULL){
+		return NULL;
+	}
+
+	node_t *temp = *head;
+	char *word = temp -> word;
+	
+	*head = (*head) -> next;
+	if(*head != NULL){
+		(*head) -> prev = NULL;
+	}
+	free(temp);
+	return word;
+}
+
+int emptyqueue(node_t **head, node_t **tail){
+	return (*head == NULL);
+}

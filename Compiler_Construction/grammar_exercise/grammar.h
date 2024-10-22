@@ -7,9 +7,9 @@ typedef struct grammar {
 } rules;
 
 typedef struct nodeg {
-        node_g *prev;
+        struct nodeg *prev;
         rules rule;
-        node_g *next; 
+        struct nodeg *next; 
 } node_g;
 
 
