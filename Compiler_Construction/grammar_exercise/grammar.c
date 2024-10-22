@@ -59,7 +59,7 @@ int enqueue_grammar(node_g **head, node_g **tail, rules grule){
 	newNode -> next = NULL;
 	newNode -> prev = *tail;
 
-	if (tail == NULL){
+	if (*tail == NULL){
 		*tail = newNode;
 		*head = newNode;
 	}else{
