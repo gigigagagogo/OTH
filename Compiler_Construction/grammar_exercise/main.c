@@ -13,11 +13,11 @@ void generate_words(node_g *head, char *startSymbol){
 	while(!emptyqueue(&wordQueueHead,&wordQueueTail)){
 		char *currentWord=dequeue_word(&wordQueueHead);
 
-		if(!isterminal(currentWord)){
+		if(isterminal(currentWord)){
 			node_g *ruleNode=head;
-
+			
 			while(ruleNode != NULL){
-				char *newWord = rep(currentWord, ruleNode -> rule.lhs, ruleNode -> rule.rhs, 0);
+				char *newWord = rep(currentWord, ruleNode -> rule.lhs, ruleNode -> rule.rhs);
 				if(newWord != NULL){
 					enqueue_word(&wordQueueHead, &wordQueueTail, newWord);
 					free(newWord);

@@ -14,7 +14,7 @@ int enqueue_word(node_t **head, node_t **tail, char *string) {
 	newNode -> next = NULL;
 	newNode -> prev = *tail;
 
-	if(tail == NULL){
+	if(*tail == NULL){
 		*tail = newNode;
 		*head = newNode;
 	}else{
