@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -O2
+CFLAGS = -O2 -g
 TARGET = main
 SRC = main.c grammar.c queue.c util.c
 OBJ = $(SRC:.c=.o)
