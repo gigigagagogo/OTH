@@ -15,7 +15,7 @@ char *rep(char *string, char *lhs, char *rhs){
 			printf("No more char match!\n");
 			break;
 		}
-		*ret = malloc(strlen(*pos) + strlen(rhs) - strlen(lhs) + 1);
+		ret = (char *)malloc(strlen(pos) + strlen(rhs) - strlen(lhs) + 1);
 		if(ret == NULL){
 			printf("Memory allocation failed!\n");
 			return NULL;
