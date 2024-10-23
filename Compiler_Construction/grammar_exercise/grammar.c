@@ -71,5 +71,17 @@ int enqueue_grammar(node_g **head, node_g **tail, rules *grule){
 	return 0;
 }
 
+void print_rules(node_g *head) {
+    node_g *current = head;
+
+    // Itera sulla lista di regole
+    while (current != NULL) {
+        // Stampa il lato sinistro (lhs) e il lato destro (rhs) della regola
+        printf("Rule: %s -> %s\n", current->rule.lhs, current->rule.rhs);
+
+        // Vai alla regola successiva
+        current = current->next;
+    }
+}
 
 

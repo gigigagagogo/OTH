@@ -16,5 +16,6 @@ typedef struct nodeg {
 
 int generate_rules(node_g **head, node_g **tail);
 int enqueue_grammar(node_g **head, node_g **tail, rules *grule);
+void print_rules(node_g *head);
 
 #endif /* _GRAMMAR_H */

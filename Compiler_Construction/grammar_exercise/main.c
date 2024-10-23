@@ -12,17 +12,22 @@ void generate_words(node_g *head, char *startSymbol){
 
 	while(!emptyqueue(&wordQueueHead,&wordQueueTail)){
 		char *currentWord=dequeue_word(&wordQueueHead);
+		printf("Word: %s\n", currentWord);
 
 		if(isterminal(currentWord)){
 			node_g *ruleNode=head;
 			
 			while(ruleNode != NULL){
-				char *newWord = rep(currentWord, ruleNode -> rule.lhs, ruleNode -> rule.rhs);
-				if(newWord != NULL){
-					enqueue_word(&wordQueueHead, &wordQueueTail, newWord);
-					free(newWord);
-				}
-				ruleNode = ruleNode -> next;
+				int n=0;
+				char *newWord = NULL;
+				do{
+					newWord = rep(currentWord, ruleNode -> rule.lhs, ruleNode -> rule.rhs, n++);
+					if(newWord != NULL){
+						enqueue_word(&wordQueueHead, &wordQueueTail, newWord);
+					
+					}
+					ruleNode = ruleNode -> next;
+				}while(newWord);
 			}
 		}else{
 			printf("Word contains only terminate symbol: %s\n", currentWord);
@@ -40,6 +45,8 @@ int main(void){
 		printf("Error with rules generation!\n");
 		return 1;
 	}
+	
+	print_rules(head);
 
 	char *startSymbol = STARTSYMBOL;
 

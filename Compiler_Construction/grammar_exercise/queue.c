@@ -10,7 +10,7 @@ int enqueue_word(node_t **head, node_t **tail, char *string) {
 		return 1;
 	}
 
-	newNode -> word = string;
+	newNode -> word = strdup(string);
 	newNode -> next = NULL;
 	newNode -> prev = *tail;
 
