@@ -1,10 +1,9 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 
-
-char *rep (char *subject, char *lhs, char *rhs, int n) {
+char *rep(char *subject, char *lhs, char *rhs, int n) {
   char *ptr = subject;
 
   // Find n'th occurrence
@@ -16,28 +15,28 @@ char *rep (char *subject, char *lhs, char *rhs, int n) {
       ptr++;
   } while (n--);
 
-  char *ret = malloc(strlen(subject)+strlen(rhs)-strlen(lhs)+1);
+  char *ret = malloc(strlen(subject) + strlen(rhs) - strlen(lhs) + 1);
 
-  if(ret == NULL){
-       	printf("Memory allocation error!\n");
+  if (ret == NULL) {
+    printf("Memory allocation error!\n");
+    exit(0);
   }
-		
 
   // Build the target word here
-  sprintf(ret, "%.*s%s%.*s",
-      (int)(ptr-subject), subject,
-      rhs,
-      (int)(strlen(subject)-(ptr-subject)-strlen(lhs)), ptr+strlen(lhs));
+  sprintf(ret, "%.*s%s%.*s", (int)(ptr - subject), subject, rhs,
+          (int)(strlen(subject) - (ptr - subject) - strlen(lhs)),
+          ptr + strlen(lhs));
 
+  printf("%s\n", ret);
   // and return it
   return ret;
 }
 
-int isterminal(char *word){
-	while(*word){
-		if(isupper(*word++)){
-			return 1;
-		}
-	}
-	return 0;
+int isterminal(char *word) {
+  while (*word) {
+    if (isupper(*word++)) {
+      return 0;
+    }
+  }
+  return 1;
 }
