@@ -3,38 +3,42 @@
 #include <string.h>
 #include <ctype.h>
 
-char *rep(char *string, char *lhs, char *rhs, int n){
-	char *rsub = string;
-	do{
-		rsub=strstr(rsub, lhs);
-		if(rsub == NULL){
-			printf("No char match!\n");
-			return NULL;
-		}
-		if(n > 0){
-			rsub++;
-		}
-	}while(n--);
-	char *ret = malloc(sizeof(string) + strlen(rhs) - strlen(lhs) + 1);
 
-	if(ret == NULL){
-		printf("Memory allocation failed!\n");
-		return NULL;
-	}
+char *rep (char *subject, char *lhs, char *rhs, int n) {
+  char *ptr = subject;
 
-	sprintf(ret,"%.*s%s%.*s",(int)(rsub-string),string,rhs,(int) (strlen(string) - (rsub - string) - strlen(lhs)), rsub + strlen(lhs));
+  // Find n'th occurrence
+  do {
+    ptr = strstr(ptr, lhs);
+    if (!ptr)
+      return NULL;
+    if (n > 0)
+      ptr++;
+  } while (n--);
 
-	return ret;
+  char *ret = malloc(strlen(subject) + strlen(rhs) - strlen(lhs) + 1);
 
+  if(ret == NULL){
+       	printf("Memory allocation error!\n");
+  }
+
+  printf("[%s]\n", subject);		
+  // Build the target word here
+  sprintf(ret, "%.*s%s%.*s",
+      (int)(ptr - subject), subject,
+      rhs,
+      (int)(strlen(subject) - (ptr-subject) - strlen(lhs)), ptr + strlen(lhs));
+
+  // and return it
+  printf("%s\n", ret);
+  return ret;
 }
 
 int isterminal(char *word){
-
 	while(*word){
 		if(isupper(*word++)){
-			return 1;
+			return 0;
 		}
 	}
-	return 0;
-
+	return 1;
 }

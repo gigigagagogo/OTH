@@ -10,11 +10,11 @@ int enqueue_word(node_t **head, node_t **tail, char *string) {
 		return 1;
 	}
 
-	newNode -> word = string;
+	newNode -> word = strdup(string);
 	newNode -> next = NULL;
 	newNode -> prev = *tail;
 
-	if(tail == NULL){
+	if(*tail == NULL){
 		*tail = newNode;
 		*head = newNode;
 	}else{
@@ -25,7 +25,7 @@ int enqueue_word(node_t **head, node_t **tail, char *string) {
 	return 0;
 }
 
-char *dequeue_word(node_t **head){
+char *dequeue_word(node_t **head, node_t **tail){
 
 	if(*head == NULL){
 		return NULL;
@@ -37,11 +37,14 @@ char *dequeue_word(node_t **head){
 	*head = (*head) -> next;
 	if(*head != NULL){
 		(*head) -> prev = NULL;
+	}else{
+		*tail = NULL;
 	}
 	free(temp);
 	return word;
+	
 }
 
-int emptyqueue(node_t **head, node_t **tail){
+int emptyqueue(node_t **head){
 	return (*head == NULL);
 }

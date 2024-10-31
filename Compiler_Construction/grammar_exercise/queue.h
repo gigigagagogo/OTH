@@ -8,8 +8,8 @@ typedef struct node {
 } node_t;
 
 int enqueue_word(node_t **head, node_t **tail, char *word);
-char *dequeue_word(node_t **head);
-int emptyqueue(node_t **head, node_t **tail);
+char *dequeue_word(node_t **head, node_t **tail);
+int emptyqueue(node_t **head);
 
 
 #endif /* _QUEUE_H */

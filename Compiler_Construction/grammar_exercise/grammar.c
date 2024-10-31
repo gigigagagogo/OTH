@@ -20,9 +20,9 @@ int generate_rules(node_g **head, node_g **tail){
 			scanf("%s", string);
 		}while(strlen(string) == 0);
 
-		if(strcmp(string,"end") == 0){
+		if(strcmp(string, "end") == 0){
 			free(newRule);
-			return 1;
+			break;
 		}
 		newRule -> lhs = strdup(string);
 
@@ -30,24 +30,25 @@ int generate_rules(node_g **head, node_g **tail){
 		scanf("%s", string);
 		newRule -> rhs = strdup(string);
 
-		if(enqueue_grammar(head, tail, *newRule) != 0){
+		if(enqueue_grammar(head, tail, newRule) != 0){
 			printf("Error with grammar rule enqueue!\n");
 			free(newRule -> lhs);
 	                free(newRule -> rhs);
 	                free(newRule);
 			return 1;
 		}
-
-		free(newRule -> lhs);
-		free(newRule -> rhs);
+	
+		//free(newRule -> lhs);
+		//free(newRule -> rhs);
 		free(newRule);
-
+	
 	}
-	 return 0;
+	printf("prova debug\n");
+	return 0;
 
 }
 
-int enqueue_grammar(node_g **head, node_g **tail, rules grule){
+int enqueue_grammar(node_g **head, node_g **tail, rules *grule){
 	node_g *newNode = malloc(sizeof(node_g));
 
 	if(newNode == NULL){
@@ -55,11 +56,11 @@ int enqueue_grammar(node_g **head, node_g **tail, rules grule){
 		return 1;
 	}
 
-	newNode -> rule = grule;
+	newNode -> rule = *grule;
 	newNode -> next = NULL;
 	newNode -> prev = *tail;
 
-	if (tail == NULL){
+	if (*tail == NULL){
 		*tail = newNode;
 		*head = newNode;
 	}else{
@@ -70,5 +71,17 @@ int enqueue_grammar(node_g **head, node_g **tail, rules grule){
 	return 0;
 }
 
+void print_rules(node_g *head) {
+    node_g *current = head;
+
+    // Itera sulla lista di regole
+    while (current != NULL) {
+        // Stampa il lato sinistro (lhs) e il lato destro (rhs) della regola
+        printf("Rule: %s -> %s\n", current->rule.lhs, current->rule.rhs);
+
+        // Vai alla regola successiva
+        current = current->next;
+    }
+}
 
 
