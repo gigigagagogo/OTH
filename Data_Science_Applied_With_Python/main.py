@@ -1,3 +1,5 @@
+import numpy as np
+
 # This is a sample Python script.
 
 # Press Shift+F10 to execute it or replace it with your code.
@@ -7,9 +9,9 @@
 def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
     l=["hello","ciao"]
-
+    a = np.array([[1,2],[3,4]])
     print(l[0][0])
-
+    print(a)
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
